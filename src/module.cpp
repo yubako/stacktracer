@@ -11,13 +11,14 @@ int submodule2(int a, int b) {
 }
 int submodule1(void) {
 
-    int a;
-    int b;
+    int a = 0x3;
+    int b = 0x4;
 
-    a = 0x3;
-    b = 0x4;
-
-
+    int i;
+    char buff[256];
+    for ( i = 0; i < 256; i++ ) {
+        buff[i] = i;
+    }
     return a + b;
 }
 

@@ -3,11 +3,18 @@ cmake_minimum_required(VERSION 3.0)
 # コンパイルオプション
 #set (CMAKE_CXX_FLAGS "-g -Wall -O2 -finstrument-functions -rdynamic")
 #set (CMAKE_C_FLAGS   "-g -Wall -O2 -finstrument-functions -rdynamic")
-set (CMAKE_C_FLAGS   "-g -Wall -include wrap.h")
-set (CMAKE_CXX_FLAGS   "-g -Wall -include wrap.h")
+set (CMAKE_C_FLAGS     "-g -Wall -rdynamic")
+set (CMAKE_CXX_FLAGS   "-g -Wall -rdynamic")
 
 # プロジェクト名
 project(stacktracer)
+
+# デバッグモードでコンパイル
+#set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_BUILD_TYPE "Release")
+
+set(CMAKE_CXX_FLAGS_DEBUG "-g -include wrap.h -D__UT_DEBUG")
+set(CMAKE_C_FLAGS_DEBUG   "-g -include wrap.h -D__UT_DEBUG")
 
 # バージョン
 set(serial "1.0.0")
@@ -34,6 +41,7 @@ link_directories(/usr/local/lib)
 add_executable(utest  test/runner.cpp test/test_tracer.cpp src/stacktracer.c)
 
 # cpputestリンケージ
-target_link_libraries(utest CppUTest CppUTestExt)
+target_link_libraries(utest dl CppUTest CppUTestExt)
+target_link_libraries(stacktracer dl)
 
 
